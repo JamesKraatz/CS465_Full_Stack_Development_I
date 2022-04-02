@@ -1,13 +1,30 @@
 const mongoose = require('mongoose');
-const host = process.env.DB_HOST || '127.0.0.1';
-let dbURI = 'mongodb://${host}/travlr';
-if (process.env.NODE_ENV === 'production') {
-    dbURI = process.env.MONGODB_URI;
-}
-mongoose.connect(dbURI);
+const host = process.env.DB_HOST || "127.0.0.1";
+let dbURI = `mongodb://${host}/travlr`;
+const readLine = require('readline');
+// if (process.env.NODE_ENV === 'production') {
+//     dbURI = process.env.MONGODB_URI;
+// }
+
+// avoid 'current Server Discovery  and Monitoring engine is deprecated'
+mongoose.set('useUnifiedTopology', true);
+
+// console.log("Here is the connection request!");
+// console.log("Attempting to connect to ", dbURI)
+// const connect = () => {
+//     setTimeout(() => mongoose.connect(dbURI, {
+//         useNewUrlParser: true,
+//         useCreateIndex: true
+//         }), 1000);  
+// }
+
+mongoose.connect(dbURI, {
+            useNewUrlParser: true,
+            useCreateIndex: true
+            });
 
 mongoose.connection.on('connected', () => {
-    console.log('Mongoose connected to $(dbURI}');
+    console.log(`Mongoose connected to ${dbURI}`);
 });
 mongoose.connection.on('error', err => {
     console.log('Moongoose connection error:', err);
@@ -15,6 +32,7 @@ mongoose.connection.on('error', err => {
 mongoose.connection.on('disconnected', () => {
     console.log('Mongoose disconnected');
 });
+
 
 const gracefulShutdown = (msg, callback) => {
     mongoose.connection.close( () => {
@@ -42,4 +60,4 @@ process.on('SIGTERM', () => {
     });
 });
 
-require('./models/travlr');
+require("./models/travlr");
