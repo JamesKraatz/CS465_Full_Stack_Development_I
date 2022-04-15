@@ -14,6 +14,8 @@ const roomsRouter = require('./app_server/routes/rooms');
 const mealsRouter = require('./app_server/routes/meals');
 const newsRouter = require('./app_server/routes/news');
 const contactRouter = require('./app_server/routes/contact');
+
+
 const aboutRouter = require('./app_server/routes/about');
 
 const app = express();
@@ -36,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  //res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   next();
 })
 
