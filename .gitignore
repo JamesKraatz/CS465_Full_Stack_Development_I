@@ -73,3 +73,4 @@ typings/
 
 # Built Visual Studio Code Extensions
 *.vsix
+app_admin/src/app/.vscode/launch.json

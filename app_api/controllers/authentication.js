@@ -1,6 +1,5 @@
 const passport = require('passport');
 const mongoose = require('mongoose');
-//const req = require('express/lib/request');
 const User = mongoose.model('users');
 
 const register = (req, res) => {
@@ -23,7 +22,7 @@ const register = (req, res) => {
             const token = user.generateJwt();
             res
                 .status(200)
-                .json([token]);
+                .json({token});
         }
     })
 };
@@ -44,7 +43,7 @@ const login = (req, res) => {
             const token = user.generateJwt();
             res
                 .status(200)
-                .json([token]);
+                .json({token});
         } else {
             res
                 .status(401)

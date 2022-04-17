@@ -3,12 +3,12 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
-email: {
+    email: {
         type: String,
         unique: true,
         required: true
     },
-name: {
+    name: {
         type: String,
         required: true
     },
@@ -17,18 +17,21 @@ name: {
 });
 
 userSchema.methods.setPassword = function(password){
+    console.log('Inside app_api/database/models/user.js#setPassword');
     this.salt = crypto.randomBytes(16).toString('hex');
     this.hash = crypto.pbkdf2Sync(password, this.salt,
         1000, 64, 'sha512').toString('hex');
 };
 
 userSchema.methods.validPassword = function(password) {
-    var hash = crypto.pbkdf2Sync(password,
+    console.log('Inside app_api/database/models/user.js#validPassword');
+    var hash = crypto.pbkdf2Sync(password, 
         this.salt, 1000, 64, 'sha512').toString('hex');
     return this.hash === hash;
 };
 
 userSchema.methods.generateJwt = function() {
+    console.log('Inside app_api/database/models/user.js#generateJWT');
     const expiry = new Date();
     expiry.setDate(expiry.getDate() + 7);
 
